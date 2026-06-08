@@ -1,0 +1,5 @@
+# El modelo se monta como volumen, NO se mete en la imagen (640 MB).
+models/
+.venv/
+__pycache__/
+*.pyc

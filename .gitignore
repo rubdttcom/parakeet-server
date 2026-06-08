@@ -1,0 +1,7 @@
+# El modelo (640 MB) NO se versiona; se descarga con ./download-model.sh
+models/
+
+# Entornos / cachés
+.venv/
+__pycache__/
+*.pyc
