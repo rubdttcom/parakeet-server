@@ -1,0 +1,22 @@
+# Quadlet: systemd gestiona el contenedor Parakeet como servicio de usuario.
+# Genera parakeet.service. Recargar con: systemctl --user daemon-reload
+[Unit]
+Description=Parakeet ASR server (contenedor, API compatible OpenAI)
+After=network-online.target
+
+[Container]
+Image=localhost/parakeet-server:latest
+ContainerName=parakeet-server
+# Exposición SOLO a localhost.
+PublishPort=127.0.0.1:8000:8000
+# Modelo montado de solo lectura, con reetiquetado SELinux (:z).
+Volume=%h/parakeet-server/models:/models:z,ro
+
+[Service]
+Restart=on-failure
+RestartSec=3
+# El modelo tarda ~2s en cargar; dale margen.
+TimeoutStartSec=120
+
+[Install]
+WantedBy=default.target
