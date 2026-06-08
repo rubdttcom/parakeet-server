@@ -5,3 +5,6 @@ models/
 .venv/
 __pycache__/
 *.pyc
+
+# Sesión de playwright-cli (no versionar)
+.playwright-cli/

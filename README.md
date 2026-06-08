@@ -93,3 +93,7 @@ curl http://127.0.0.1:8000/health
 Parakeet TDT 0.6b v3 convertido a ONNX int8 por
 [k2-fsa/sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx) (descargado por
 `download-model.sh`). No se versiona en git (640 MB); está en `.gitignore`.
+
+## Licencia
+
+[MIT](LICENSE) © Rubén Fernández
