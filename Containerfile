@@ -84,11 +84,14 @@ COPY server.py .
 # host se acota al arrancar con  -p 127.0.0.1:8000:8000.
 # Por defecto ENGINE=sherpa (compat hacia atrás); el quadlet lo sube a
 # parakeet-cpp. GGML_BACKEND_PATH ayuda a ggml a localizar el backend Vulkan.
+# PARAKEET_STREAM_GGUF vacío por defecto (streaming off); el quadlet lo activa
+# apuntando al modelo cache-aware streaming (Nemotron) montado en el volumen.
 ENV PARAKEET_HOST=0.0.0.0 \
     PARAKEET_PORT=8000 \
     PARAKEET_ENGINE=sherpa \
     PARAKEET_MODEL_DIR=/models/parakeet-tdt-0.6b-v3 \
     PARAKEET_GGUF=/models/parakeet-cpp/tdt-0.6b-v3-q8_0.gguf \
+    PARAKEET_STREAM_GGUF= \
     PARAKEET_LIB=libparakeet.so \
     GGML_BACKEND_PATH=/usr/local/lib
 

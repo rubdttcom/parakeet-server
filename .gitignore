@@ -8,3 +8,7 @@ __pycache__/
 
 # Sesión de playwright-cli (no versionar)
 .playwright-cli/
+
+# venv del prototipo de streaming (no versionar)
+prototype/.venv/
+prototype/__pycache__/

@@ -14,6 +14,8 @@ Volume=%h/parakeet-server/models:/models:z,ro
 # Motor parakeet.cpp (GGUF q8_0): más preciso que el int8 y, en iGPU, más rápido.
 # Cambiar a "sherpa" para volver al motor ONNX int8 en CPU.
 Environment=PARAKEET_ENGINE=parakeet-cpp
+# Streaming cache-aware (Nemotron) en WS /v1/audio/stream. Vacío para desactivar.
+Environment=PARAKEET_STREAM_GGUF=/models/parakeet-cpp/nemotron-3.5-asr-streaming-0.6b-q8_0.gguf
 # iGPU para el backend Vulkan de ggml. renderD128 es el render node (modo 0666
 # en este host, accesible por el contenedor rootless sin grupos extra).
 AddDevice=/dev/dri/renderD128

@@ -45,4 +45,16 @@ else
     curl -fL "$GGUF_URL" -o "$GGUF"
     echo "GGUF listo en $GGUF"
 fi
+
+# --- Modelo streaming (Nemotron) para el endpoint WS /v1/audio/stream -------
+# Cache-aware streaming, multilingüe. Necesario para el modo dictado en vivo.
+NEM="$GGUF_DST/nemotron-3.5-asr-streaming-0.6b-q8_0.gguf"
+NEM_URL="https://huggingface.co/mudler/parakeet-cpp-gguf/resolve/main/nemotron-3.5-asr-streaming-0.6b-q8_0.gguf"
+if [[ -f "$NEM" ]]; then
+    echo "El GGUF streaming ya está en $NEM — nada que hacer."
+else
+    echo "Descargando GGUF streaming Nemotron (~980 MB)..."
+    curl -fL "$NEM_URL" -o "$NEM"
+    echo "GGUF streaming listo en $NEM"
+fi
 ls -la "$GGUF_DST"

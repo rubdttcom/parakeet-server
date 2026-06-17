@@ -39,10 +39,15 @@ run() {
     # --device renderD128: iGPU para el backend Vulkan (solo lo usa parakeet-cpp).
     local gpu=()
     [[ "$engine" == "parakeet-cpp" && -e /dev/dri/renderD128 ]] && gpu=(--device /dev/dri/renderD128)
+    # Streaming opcional: si está el GGUF de Nemotron, expón WS /v1/audio/stream.
+    local stream_env=()
+    local nem="$MODEL_DIR/parakeet-cpp/nemotron-3.5-asr-streaming-0.6b-q8_0.gguf"
+    [[ -f "$nem" ]] && stream_env=(-e "PARAKEET_STREAM_GGUF=/models/parakeet-cpp/nemotron-3.5-asr-streaming-0.6b-q8_0.gguf")
     podman run -d --replace --name "$NAME" \
         -p 127.0.0.1:8000:8000 \
         -v "$MODEL_DIR:/models:z,ro" \
         -e "PARAKEET_ENGINE=$engine" \
+        "${stream_env[@]}" \
         "${gpu[@]}" \
         --restart unless-stopped \
         "$IMAGE"
