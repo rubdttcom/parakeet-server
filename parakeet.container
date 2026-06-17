@@ -11,6 +11,12 @@ ContainerName=parakeet-server
 PublishPort=127.0.0.1:8000:8000
 # Modelo montado de solo lectura, con reetiquetado SELinux (:z).
 Volume=%h/parakeet-server/models:/models:z,ro
+# Motor parakeet.cpp (GGUF q8_0): más preciso que el int8 y, en iGPU, más rápido.
+# Cambiar a "sherpa" para volver al motor ONNX int8 en CPU.
+Environment=PARAKEET_ENGINE=parakeet-cpp
+# iGPU para el backend Vulkan de ggml. renderD128 es el render node (modo 0666
+# en este host, accesible por el contenedor rootless sin grupos extra).
+AddDevice=/dev/dri/renderD128
 
 [Service]
 Restart=on-failure

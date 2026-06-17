@@ -28,5 +28,21 @@ SRC="$(find "$TMP" -maxdepth 1 -type d -name 'sherpa-onnx-nemo-parakeet*' | head
 mkdir -p "$DST"
 cp "$SRC"/encoder.int8.onnx "$SRC"/decoder.int8.onnx "$SRC"/joiner.int8.onnx "$SRC"/tokens.txt "$DST"/
 
-echo "Modelo listo en $DST:"
+echo "Modelo ONNX (sherpa) listo en $DST:"
 ls -la "$DST"
+
+# --- Modelo GGUF para el motor parakeet-cpp ---------------------------------
+# q8_0 (mismo Parakeet TDT 0.6b v3) publicado por mudler para parakeet.cpp.
+# Más preciso que el int8 de sherpa y, en iGPU (Vulkan), más rápido.
+GGUF_DST="$DIR/models/parakeet-cpp"
+GGUF="$GGUF_DST/tdt-0.6b-v3-q8_0.gguf"
+GGUF_URL="https://huggingface.co/mudler/parakeet-cpp-gguf/resolve/main/tdt-0.6b-v3-q8_0.gguf"
+if [[ -f "$GGUF" ]]; then
+    echo "El GGUF ya está en $GGUF — nada que hacer."
+else
+    mkdir -p "$GGUF_DST"
+    echo "Descargando GGUF q8_0 (~940 MB)..."
+    curl -fL "$GGUF_URL" -o "$GGUF"
+    echo "GGUF listo en $GGUF"
+fi
+ls -la "$GGUF_DST"
