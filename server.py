@@ -28,7 +28,10 @@ from flask import Flask, jsonify, request
 
 ENGINE = os.environ.get("PARAKEET_ENGINE", "sherpa").lower()
 STREAM_GGUF = os.environ.get("PARAKEET_STREAM_GGUF", "")
-NUM_THREADS = int(os.environ.get("PARAKEET_THREADS", "6"))
+# Solo lo usa el motor sherpa (ONNX int8 en CPU). El motor parakeet-cpp corre en
+# la iGPU (Vulkan) y no depende de esto. 8 es buen punto para transducer ASR;
+# subible por env si se quiere tirar de más núcleos.
+NUM_THREADS = int(os.environ.get("PARAKEET_THREADS", "8"))
 LANG = os.environ.get("PARAKEET_LANG", "es")
 SAMPLE_RATE = 16000
 
